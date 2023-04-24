@@ -19,10 +19,11 @@ class Block:
     def __eq__(self, other) -> bool:
         return isinstance(other, Block) and self.x == other.x and self.y == other.y
 
+    def __str__(self) -> str:
+        return f'Block({self.x}, {self.y})'
 
-class Head:
-    head = Block(randrange(0, WINDOW_SIZE, SIZE),
-                 randrange(0, WINDOW_SIZE, SIZE))
+    def __repr__(self) -> str:
+        return self.__str__()
 
 
 class Apple:
@@ -31,107 +32,123 @@ class Apple:
 
 
 class Snake:
-    lenght = 1
-    body = [Head.head]
-    d_row, d_col = 0, 0
-    buf_d_row, buf_d_col = 0, 0
-    score = 0
-    speed = 6000
-    time_to_speed = 0
-    d_speed = 400
+    
+    def __init__(self) -> None:
+        self.length = 1
+        self.head = Block(randrange(0, WINDOW_SIZE, SIZE),
+                    randrange(0, WINDOW_SIZE, SIZE))
+        self.body = [self.head]
+        self.d_row, self.d_col = 0, 0
+        self.buf_d_row, self.buf_d_col = 0, 0
+        self.score = 0
+        self.speed = 6000
+        self.time_to_speed = 0
+        self.d_speed = 400
 
-    UPDATE = 30000
-    MAXSPEED = UPDATE
+        self.UPDATE = 30000
+        self.MAXSPEED = self.UPDATE
 
 
 pygame.init()
 screen = pygame.display.set_mode([WINDOW_SIZE, WINDOW_SIZE])
+pygame.display.set_caption("SnakeGame by @FflashkingF")
 clock = pygame.time.Clock()
 font_score = pygame.font.SysFont('Arial', 26, bold=True)
 font_end = pygame.font.SysFont('Arial', 66, bold=True)
-fps = 40
+FPS = 40
 
 
 def draw_block_by_x_y(x, y, color, indent) -> None:
     pygame.draw.rect(screen, pygame.Color(color), (x + indent,
-                     y + indent, SIZE - indent, SIZE - indent))
+                     y + indent, SIZE - indent * 2, SIZE - indent * 2))
 
 
 def draw_block(block, color, indent) -> None:
     draw_block_by_x_y(block.x, block.y, color, indent)
 
 
-def get_random_empty_block() -> Block:
+def get_random_empty_block(snake) -> Block:
     while True:
         ans = Block(randrange(0, WINDOW_SIZE, SIZE),
                     randrange(0, WINDOW_SIZE, SIZE))
-        if ans not in Snake.body:
-          return ans
+        if ans not in snake.body:
+            return ans
 
 
-while True:
-    screen.fill(pygame.Color('black'))
+def gameloop() -> None:
+    running = True
+    snake = Snake()
+    apple = Apple()
+    while running:
+        screen.fill(pygame.Color('black'))
+        # drawing snake
+        for block in snake.body:
+            draw_block(block, 'green', 1)
 
-    # drawing snake
-    for block in Snake.body:
-        draw_block(block, 'green', 1)
+        # drawing apple
+        draw_block(apple.apple, 'red', 0)
 
-    # drawing apple
-    draw_block(Apple.apple, 'red', 0)
+        # show score
+        render_score = font_score.render(
+            f'SCORE: {snake.score}', 1, pygame.Color('orange'))
+        screen.blit(render_score, (5, 5))
 
-    # show score
-    render_score = font_score.render(
-        f'SCORE: {Snake.score}', 1, pygame.Color('orange'))
-    screen.blit(render_score, (5, 5))
+        # snake movement
+        snake.time_to_speed += 1
+        if snake.time_to_speed * snake.speed >= snake.UPDATE:
+            snake.d_col = snake.buf_d_col
+            snake.d_row = snake.buf_d_row
+            snake.time_to_speed = 0
+            snake.head.x += snake.d_row * SIZE
+            snake.head.y += snake.d_col * SIZE
+            snake.body.append(Block(snake.head.x, snake.head.y))
+            snake.body = snake.body[-snake.length:]
 
-    # snake movement
-    Snake.time_to_speed += 1
-    if Snake.time_to_speed * Snake.speed >= Snake.UPDATE:
-        Snake.d_col = Snake.buf_d_col
-        Snake.d_row = Snake.buf_d_row
-        Snake.time_to_speed = 0
-        Head.head.x += Snake.d_row * SIZE
-        Head.head.y += Snake.d_col * SIZE
-        Snake.body.append(Block(Head.head.x, Head.head.y))
-        Snake.body = Snake.body[-Snake.lenght:]
+        # eating apple
+        if snake.head == apple.apple:
+            apple.apple = get_random_empty_block(snake)
+            snake.length += 1
+            snake.score += 1
+            snake.speed += snake.d_speed
+            snake.d_speed -= 15
+            snake.speed = min(snake.speed, snake.MAXSPEED)
 
-    # eating Apple
-    if Head.head == Apple.apple:
-        Apple.apple = get_random_empty_block()
-        Snake.lenght += 1
-        Snake.score += 1
-        Snake.speed += Snake.d_speed
-        Snake.d_speed -= 15
-        Snake.speed = min(Snake.speed, Snake.MAXSPEED)
+        # game over
+        is_end = (snake.head.x < 0 or snake.head.x > WINDOW_SIZE - SIZE
+                  or snake.head.y < 0 or snake.head.y > WINDOW_SIZE - SIZE or len(snake.body) != len(set(snake.body)))
+        if is_end:
+            running = False
+            while True:
+                render_end = font_end.render(
+                    'GAME OVER', 1, pygame.Color('orange'))
+                screen.blit(render_end, (WINDOW_SIZE //
+                            2 - 200, WINDOW_SIZE // 3))
+                pygame.display.flip()
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        exit()
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_r:
+                            gameloop()
 
-    # game over
-    is_end = (Head.head.x < 0 or Head.head.x > WINDOW_SIZE - SIZE
-              or Head.head.y < 0 or Head.head.y > WINDOW_SIZE - SIZE or len(Snake.body) != len(set(Snake.body)))
-    if is_end:
-        while True:
-            render_end = font_end.render(
-                'GAME OVER', 1, pygame.Color('orange'))
-            screen.blit(render_end, (WINDOW_SIZE // 2 - 200, WINDOW_SIZE // 3))
-            pygame.display.flip()
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    exit()
-    
-    #update screen
-    pygame.display.flip()
-    clock.tick(fps)
+        # update screen
+        pygame.display.flip()
+        clock.tick(FPS)
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            exit()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                exit()
 
-    # control
-    key = pygame.key.get_pressed()
-    if (key[pygame.K_UP] or key[pygame.K_w]) and Snake.d_col == 0:
-        Snake.buf_d_row, Snake.buf_d_col = 0, -1
-    elif (key[pygame.K_LEFT] or key[pygame.K_a]) and Snake.d_row == 0:
-        Snake.buf_d_row, Snake.buf_d_col = -1, 0
-    elif (key[pygame.K_DOWN] or key[pygame.K_s]) and Snake.d_col == 0:
-        Snake.buf_d_row, Snake.buf_d_col = 0, 1
-    elif (key[pygame.K_RIGHT] or key[pygame.K_d]) and Snake.d_row == 0:
-        Snake.buf_d_row, Snake.buf_d_col = 1, 0
+        # control
+        key = pygame.key.get_pressed()
+        if (key[pygame.K_UP] or key[pygame.K_w]) and snake.d_col == 0:
+            snake.buf_d_row, snake.buf_d_col = 0, -1
+        elif (key[pygame.K_LEFT] or key[pygame.K_a]) and snake.d_row == 0:
+            snake.buf_d_row, snake.buf_d_col = -1, 0
+        elif (key[pygame.K_DOWN] or key[pygame.K_s]) and snake.d_col == 0:
+            snake.buf_d_row, snake.buf_d_col = 0, 1
+        elif (key[pygame.K_RIGHT] or key[pygame.K_d]) and snake.d_row == 0:
+            snake.buf_d_row, snake.buf_d_col = 1, 0
+
+
+gameloop()
