@@ -14,4 +14,4 @@ clock = pygame.time.Clock()
 
 images = ['16.jpg', '17.jpg']
 img = pygame.image.load(full_path/'17.jpg').convert()
-hall = pygame.image.load(full_path/'20.jpg').convert()
+hall = pygame.image.load(full_path/'21.png').convert()
