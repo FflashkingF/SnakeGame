@@ -25,7 +25,8 @@ def draw_end() -> None:
 
 
 def draw_records(mas) -> None:
-    global_.screen.fill(pygame.Color('black'))
+    global_.screen.blit(global_.hall, (0, 0))
+    #global_.screen.fill(pygame.Color('black'))
 
     GOLD = (255, 215, 0)
     font_title = pygame.font.SysFont('Arial', 100, bold=True)
