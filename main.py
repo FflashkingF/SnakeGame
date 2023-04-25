@@ -87,8 +87,9 @@ def gameloop(name) -> None:
             snake.length += 1
             snake.score += 1
             snake.speed += snake.d_speed
+            snake.speed = max(snake.speed, snake_.Snake.MIN_SPEED)
             snake.d_speed -= 15
-            snake.speed = min(snake.speed, snake.MAXSPEED)
+            snake.speed = min(snake.speed, snake_.Snake.MAX_SPEED)
 
         # game over
         check_and_end_of_game(snake)

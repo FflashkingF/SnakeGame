@@ -4,6 +4,11 @@ from random import randrange
 
 
 class Snake:
+    UPDATE = 30000
+    MIN_SPEED = 3000
+    MAX_SPEED = UPDATE
+    START_SPEED = 6000
+    
     def __init__(self) -> None:
         self.length = 1
         self.head = block_.Block(randrange(0, global_.WINDOW_SIZE, global_.SIZE),
@@ -12,12 +17,11 @@ class Snake:
         self.d_row, self.d_col = 0, 0
         self.buf_d_row, self.buf_d_col = 0, 0
         self.score = 0
-        self.speed = 6000
+        self.speed = Snake.START_SPEED
         self.time_to_speed = 0
         self.d_speed = 400
 
-        self.UPDATE = 30000
-        self.MAXSPEED = self.UPDATE
+        
 
     def move(self) -> None:
         self.time_to_speed += 1
