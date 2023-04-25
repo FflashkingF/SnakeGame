@@ -27,8 +27,9 @@ def draw_end() -> None:
 def draw_records(mas) -> None:
     global_.screen.fill(pygame.Color('black'))
 
+    GOLD = (255, 215, 0)
     font_title = pygame.font.SysFont('Arial', 100, bold=True)
-    title_render = font_title.render('Hall of Fame', True, (255, 215, 0))
+    title_render = font_title.render('Hall of Fame', True, GOLD)
     title_rect = title_render.get_rect(center=(global_.WINDOW_SIZE // 2, 100))
     global_.screen.blit(title_render, title_rect)
 
@@ -36,7 +37,7 @@ def draw_records(mas) -> None:
     font_records = pygame.font.SysFont('Arial', 75, bold=False)
     for name, score in mas:
         score_render = font_records.render(
-            f'{name}   {score}', True, (255, 215, 0))
+            f'{name}   {score}', True, GOLD)
         score_rect = score_render.get_rect(
             center=(global_.WINDOW_SIZE // 2, now))
         now += 100

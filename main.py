@@ -60,9 +60,13 @@ def gameloop(name) -> None:
     snake = snake_.Snake()
     snake.name = name
     apple = get_random_empty_block(snake)
+
+    global_.img = pygame.image.load(
+        global_.full_path/global_.images[randrange(0, 2)]).convert()
+        
     while running:
         global_.screen.blit(global_.img, (0, 0))
-        #global_.screen.fill(pygame.Color('black'))
+        # global_.screen.fill(pygame.Color('black'))
 
         # drawing snake
         for block in snake.body:
@@ -99,7 +103,7 @@ def gameloop(name) -> None:
 
         # control
         scan_key_pressed(snake)
-        
+
 
 name = input("Enter your nick: ")
 gameloop(name)
