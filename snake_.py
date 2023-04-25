@@ -8,7 +8,7 @@ class Snake:
     MIN_SPEED = 3000
     MAX_SPEED = UPDATE
     START_SPEED = 6000
-    
+    COLORS = ['green', 'red', 'blue', 'gold', 'cyan', 'yellow', 'brown', 'pink', 'white', 'orange', 'purple']
     def __init__(self) -> None:
         self.length = 1
         self.head = block_.Block(randrange(0, global_.WINDOW_SIZE, global_.SIZE),
@@ -20,8 +20,8 @@ class Snake:
         self.speed = Snake.START_SPEED
         self.time_to_speed = 0
         self.d_speed = 400
-
-        
+        self.color = 'green'
+        self.pos_color = 0
 
     def move(self) -> None:
         self.time_to_speed += 1

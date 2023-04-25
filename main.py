@@ -43,6 +43,16 @@ def check_and_end_of_game(snake: snake_.Snake) -> None:
                         pygame.display.flip()
 
 
+def check_events(snake: snake_.Snake) -> None:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            exit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_l:
+                snake.pos_color += 1
+                snake.pos_color %= len(snake_.Snake.COLORS)
+                snake.color = snake_.Snake.COLORS[snake.pos_color]
+
 def scan_key_pressed(snake: snake_.Snake) -> None:
     key = pygame.key.get_pressed()
     if (key[pygame.K_UP] or key[pygame.K_w]) and snake.d_col == 0:
@@ -53,7 +63,7 @@ def scan_key_pressed(snake: snake_.Snake) -> None:
         snake.buf_d_row, snake.buf_d_col = 0, 1
     elif (key[pygame.K_RIGHT] or key[pygame.K_d]) and snake.d_row == 0:
         snake.buf_d_row, snake.buf_d_col = 1, 0
-
+    check_events(snake)
 
 def gameloop(name) -> None:
     running = True
@@ -70,7 +80,7 @@ def gameloop(name) -> None:
 
         # drawing snake
         for block in snake.body:
-            draw_block(block, 'green', 1)
+            draw_block(block, snake.color, 1)
 
         # drawing apple
         draw_block(apple, 'red', 0)
@@ -98,9 +108,9 @@ def gameloop(name) -> None:
         pygame.display.flip()
         global_.clock.tick(global_.FPS)
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                exit()
+        #for event in pygame.event.get():
+            #if event.type == pygame.QUIT:
+                #exit()
 
         # control
         scan_key_pressed(snake)
