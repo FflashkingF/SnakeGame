@@ -1,15 +1,16 @@
 import json
 import fonts_
+import global_
 from functools import cmp_to_key
 
 def input() -> dict:
-    with open('records.json', 'r') as file:
+    with open(global_.full_path/'records.json', 'r') as file:
         data = json.load(file)
     return data
 
 
 def output(data) -> None:
-    with open('records.json', 'w') as file:
+    with open(global_.full_path/'records.json', 'w') as file:
         json.dump(data, file, indent=2)
 
 
@@ -26,7 +27,6 @@ def draw_records() -> None:
   for name, score in data.items():
     mas.append((name, score))
   
-  print(mas)
   def compare_func(a, b) -> int:
     if a == b:
       return 0
@@ -37,6 +37,5 @@ def draw_records() -> None:
       return 1
 
   mas = sorted(mas, key=cmp_to_key(compare_func))
-  print(mas)
   fonts_.draw_records(mas)
 
