@@ -8,10 +8,16 @@ SIZE = 50
 FPS = 40
 
 pygame.init()
-screen = pygame.display.set_mode([WINDOW_SIZE, WINDOW_SIZE])
+screen = "temp"
 pygame.display.set_caption("SnakeGame by @FflashkingF")
 clock = pygame.time.Clock()
 
 images = ['16.jpg', '17.jpg']
-img = pygame.image.load(full_path/'17.jpg').convert()
-hall = pygame.image.load(full_path/'21.png').convert()
+img = "temp"
+hall = "temp"
+
+def start():
+  global screen
+  global hall
+  screen = pygame.display.set_mode([WINDOW_SIZE, WINDOW_SIZE])
+  hall = pygame.image.load(full_path/'21.png').convert()

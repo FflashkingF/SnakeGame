@@ -29,7 +29,8 @@ class Snake:
             self.d_col = self.buf_d_col
             self.d_row = self.buf_d_row
             self.time_to_speed = 0
-            self.head.x += self.d_row * global_.SIZE
-            self.head.y += self.d_col * global_.SIZE
+            self.head.x += self.d_col * global_.SIZE
+            self.head.y += self.d_row * global_.SIZE
             self.body.append(block_.Block(self.head.x, self.head.y))
             self.body = self.body[-self.length:]
+

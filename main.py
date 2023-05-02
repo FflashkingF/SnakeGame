@@ -36,36 +36,61 @@ def check_and_end_of_game(snake: snake_.Snake) -> None:
                 if event.type == pygame.QUIT:
                     exit()
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_r:
+                    cl = event.unicode.lower()
+                    if event.key == pygame.K_r or cl == 'r' or cl == 'к':
                         gameloop(snake.name)
-                    if event.key == pygame.K_t:
+                    elif event.key == pygame.K_t or cl == 't' or cl == 'е':
                         records_.draw_records()
                         pygame.display.flip()
 
-
+cl = 'temp'
+key = 'temp'         
 def check_events(snake: snake_.Snake) -> None:
+    global cl
+    global key
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_l:
+            cl = event.unicode.lower()
+            key = event.key
+            if (cl == 'w' or cl == 'ц' or key == pygame.K_w or key == pygame.K_UP) and snake.d_row == 0:
+                snake.buf_d_col, snake.buf_d_row = 0, -1
+            elif (cl == 'a' or cl == 'ф' or key == pygame.K_a or key == pygame.K_LEFT) and snake.d_col == 0:
+                snake.buf_d_col, snake.buf_d_row = -1, 0
+            elif (cl == 's' or cl == 'ы' or key == pygame.K_s or key == pygame.K_DOWN) and snake.d_row == 0:
+                snake.buf_d_col, snake.buf_d_row = 0, 1
+            elif (cl == 'd' or cl == 'в' or key == pygame.K_d or key == pygame.K_RIGHT) and snake.d_col == 0:
+                snake.buf_d_col, snake.buf_d_row = 1, 0
+            elif (cl == 'д' or cl == 'l' or key == pygame.K_l):
                 snake.pos_color += 1
                 snake.pos_color %= len(snake_.Snake.COLORS)
                 snake.color = snake_.Snake.COLORS[snake.pos_color]
+    if cl != 'temp':
+        if (cl == 'w' or cl == 'ц' or key == pygame.K_w or key == pygame.K_UP) and snake.d_row == 0:
+            snake.buf_d_col, snake.buf_d_row = 0, -1
+        elif (cl == 'a' or cl == 'ф' or key == pygame.K_a or key == pygame.K_LEFT) and snake.d_col == 0:
+            snake.buf_d_col, snake.buf_d_row = -1, 0
+        elif (cl == 's' or cl == 'ы' or key == pygame.K_s or key == pygame.K_DOWN) and snake.d_row == 0:
+            snake.buf_d_col, snake.buf_d_row = 0, 1
+        elif (cl == 'd' or cl == 'в' or key == pygame.K_d or key == pygame.K_RIGHT) and snake.d_col == 0:
+            snake.buf_d_col, snake.buf_d_row = 1, 0
 
 def scan_key_pressed(snake: snake_.Snake) -> None:
-    key = pygame.key.get_pressed()
-    if (key[pygame.K_UP] or key[pygame.K_w]) and snake.d_col == 0:
-        snake.buf_d_row, snake.buf_d_col = 0, -1
-    elif (key[pygame.K_LEFT] or key[pygame.K_a]) and snake.d_row == 0:
-        snake.buf_d_row, snake.buf_d_col = -1, 0
-    elif (key[pygame.K_DOWN] or key[pygame.K_s]) and snake.d_col == 0:
-        snake.buf_d_row, snake.buf_d_col = 0, 1
-    elif (key[pygame.K_RIGHT] or key[pygame.K_d]) and snake.d_row == 0:
-        snake.buf_d_row, snake.buf_d_col = 1, 0
     check_events(snake)
+    #key = pygame.key.get_pressed()
+    #if (key[pygame.K_UP] or key[pygame.K_w]) and snake.d_row == 0:
+    #    snake.buf_d_col, snake.buf_d_row = 0, -1
+    #elif (key[pygame.K_LEFT] or key[pygame.K_a]) and snake.d_col == 0:
+    #    snake.buf_d_col, snake.buf_d_row = -1, 0
+    #elif (key[pygame.K_DOWN] or key[pygame.K_s]) and snake.d_row == 0:
+    #    snake.buf_d_col, snake.buf_d_row = 0, 1
+    #elif (key[pygame.K_RIGHT] or key[pygame.K_d]) and snake.d_col == 0:
+    #    snake.buf_d_col, snake.buf_d_row = 1, 0
 
 def gameloop(name) -> None:
+    global cl, key
+    cl = key = 'temp'
     running = True
     snake = snake_.Snake()
     snake.name = name
@@ -117,4 +142,5 @@ def gameloop(name) -> None:
 
 
 name = input("Enter your nick: ")
+global_.start()
 gameloop(name)
