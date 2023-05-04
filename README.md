@@ -10,6 +10,6 @@ you can move by WASD or UP/DOWN/LEFT/RIGHT    <br />
 you can switch color by L <br />
 after lose:   <br />
 <p>&nbsp;&nbsp;&nbsp;&nbsp;restart - R</p>  
-<pre>  records - T : and R to restart</pre>  
+<p>&nbsp;&nbsp;&nbsp;&nbsp;records - T : and R to restart</p>  
 <br />
 the game is more stable on English keyboard :)
