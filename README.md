@@ -9,7 +9,7 @@ Print your nick to terminal   <br />
 you can move by WASD or UP/DOWN/LEFT/RIGHT    <br />
 you can switch color by L <br />
 after lose:   <br />
-  <pre>restart - R   <br />
-  <pre>records - T : and R to restart   <br />
+<pre>   restart - R</pre>   <br />
+<pre>   records - T : and R to restart</pre>  <br />
 <br />
 the game is more stable on English keyboard :)
