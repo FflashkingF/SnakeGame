@@ -9,6 +9,7 @@ class Snake:
     MAX_SPEED = UPDATE
     START_SPEED = 6000
     COLORS = ['green', 'red', 'blue', 'gold', 'cyan', 'yellow', 'brown', 'pink', 'white', 'orange', 'purple']
+    VARIANT_OF_START = [6000, 8000, 10000, 12000, 14000]
     def __init__(self) -> None:
         self.length = 1
         self.head = block_.Block(randrange(0, global_.WINDOW_SIZE, global_.SIZE),

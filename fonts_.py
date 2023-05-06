@@ -19,7 +19,7 @@ def draw_end() -> None:
 
     hint_font = pygame.font.SysFont('Arial', 20, bold=True)
     hint_render = hint_font.render(
-        'press t or r', True, pygame.Color('orange'))
+        'press t (table) or r (restart) or m (menu)', True, pygame.Color('orange'))
     hint_rect = hint_render.get_rect(center=(global_.WINDOW_SIZE // 2, global_.WINDOW_SIZE // 3 + 40))
     global_.screen.blit(hint_render, hint_rect)
 
@@ -45,3 +45,33 @@ def draw_records(mas) -> None:
         global_.screen.blit(score_render, score_rect)
         if now + global_.SIZE * 2 >= global_.WINDOW_SIZE:
             break
+
+    support_font = pygame.font.SysFont('Arial', 20, bold=False)
+    support_render = support_font.render('m (menu) or r (restart)', True, GOLD)
+    global_.screen.blit(support_render, (5, global_.WINDOW_SIZE - 25))
+
+def draw_help_menu():
+    help_font = pygame.font.SysFont('Arial', 40, bold=True)
+    help_render = help_font.render(
+        'Input your nick.', True, pygame.Color('chartreuse4'))
+    help_rect = help_render.get_rect(
+        center=(global_.WINDOW_SIZE // 2, global_.WINDOW_SIZE // 10))
+    global_.screen.blit(help_render, help_rect)
+
+    help_render2 = help_font.render(
+        'Click to rectangle and write your nick.', True, pygame.Color('chartreuse4'))
+    help_rect2 = help_render2.get_rect(
+        center=(global_.WINDOW_SIZE // 2, global_.WINDOW_SIZE // 10 + help_render.get_height()))
+    global_.screen.blit(help_render2, help_rect2)
+
+    help_render3 = help_font.render(
+        'Click to Return to accept your nick.', True, pygame.Color('chartreuse4'))
+    help_rect3 = help_render3.get_rect(
+        center=(global_.WINDOW_SIZE // 2, global_.WINDOW_SIZE // 10 + help_render.get_height() + help_render2.get_height()))
+    global_.screen.blit(help_render3, help_rect3)
+
+    help_render4 = help_font.render(
+        'After Return click 1...5 to choice level.', True, pygame.Color('chartreuse4'))
+    help_rect4 = help_render4.get_rect(
+        center=(global_.WINDOW_SIZE // 2, 8 * global_.WINDOW_SIZE // 10))
+    global_.screen.blit(help_render4, help_rect4)

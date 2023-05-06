@@ -5,7 +5,7 @@ import snake_
 import fonts_
 import records_
 from random import randrange
-
+import menu_
 
 def draw_block_by_x_y(x, y, color, indent) -> None:
     pygame.draw.rect(global_.screen, pygame.Color(color), (x + indent,
@@ -38,10 +38,13 @@ def check_and_end_of_game(snake: snake_.Snake) -> None:
                 if event.type == pygame.KEYDOWN:
                     cl = event.unicode.lower()
                     if event.key == pygame.K_r or cl == 'r' or cl == 'к':
-                        gameloop(snake.name)
+                        gameloop(snake.level, snake.name)
                     elif event.key == pygame.K_t or cl == 't' or cl == 'е':
                         records_.draw_records()
                         pygame.display.flip()
+                    elif event.key == pygame.K_m or cl == 'm' or cl == 'ь':
+                        level, name = menu_.menu(snake.name)
+                        gameloop(level, name)
 
 cl = 'temp'
 key = 'temp'         
@@ -49,6 +52,7 @@ def check_events(snake: snake_.Snake) -> None:
     global cl
     global key
     for event in pygame.event.get():
+        #print(event)
         if event.type == pygame.QUIT:
             exit()
         if event.type == pygame.KEYDOWN:
@@ -88,12 +92,14 @@ def scan_key_pressed(snake: snake_.Snake) -> None:
     #elif (key[pygame.K_RIGHT] or key[pygame.K_d]) and snake.d_col == 0:
     #    snake.buf_d_col, snake.buf_d_row = 1, 0
 
-def gameloop(name) -> None:
+def gameloop(level, name) -> None:
     global cl, key
     cl = key = 'temp'
     running = True
     snake = snake_.Snake()
     snake.name = name
+    snake.level = level
+    snake.speed = snake_.Snake.VARIANT_OF_START[level - 1]
     apple = get_random_empty_block(snake)
 
     global_.img = pygame.image.load(
@@ -135,12 +141,13 @@ def gameloop(name) -> None:
 
         #for event in pygame.event.get():
             #if event.type == pygame.QUIT:
-                #exit()
+            #exit()
 
         # control
         scan_key_pressed(snake)
 
 
-name = input("Enter your nick: ")
+#name = input("Enter your nick: ")
 global_.start()
-gameloop(name)
+level, name = menu_.menu()
+gameloop(level, name)
