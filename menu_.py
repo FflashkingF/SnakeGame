@@ -1,7 +1,6 @@
 import global_
 import pygame
 import fonts_
-import constants_
 
 def menu(start_name=''):
     size_of_font = 100
