@@ -17,16 +17,18 @@ def draw_end() -> None:
         center=(global_.WINDOW_SIZE // 2, global_.WINDOW_SIZE // 3))
     global_.screen.blit(end_render, end_rect)
 
+    SMALL_GAP = 40
     hint_font = pygame.font.SysFont('Arial', 20, bold=True)
     hint_render = hint_font.render(
         'press t (table) or r (restart) or m (menu)', True, pygame.Color('orange'))
-    hint_rect = hint_render.get_rect(center=(global_.WINDOW_SIZE // 2, global_.WINDOW_SIZE // 3 + 40))
+    hint_rect = hint_render.get_rect(
+        center=(global_.WINDOW_SIZE // 2, global_.WINDOW_SIZE // 3 + SMALL_GAP))
     global_.screen.blit(hint_render, hint_rect)
 
 
 def draw_records(mas) -> None:
     global_.screen.blit(global_.hall, (0, 0))
-    #global_.screen.fill(pygame.Color('black'))
+    # global_.screen.fill(pygame.Color('black'))
 
     GOLD = (255, 215, 0)
     font_title = pygame.font.SysFont('Arial', 100, bold=True)
@@ -49,6 +51,7 @@ def draw_records(mas) -> None:
     support_font = pygame.font.SysFont('Arial', 20, bold=False)
     support_render = support_font.render('m (menu) or r (restart)', True, GOLD)
     global_.screen.blit(support_render, (5, global_.WINDOW_SIZE - 25))
+
 
 def draw_help_menu():
     help_font = pygame.font.SysFont('Arial', 40, bold=True)

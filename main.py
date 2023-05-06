@@ -7,6 +7,7 @@ import records_
 from random import randrange
 import menu_
 
+
 def draw_block_by_x_y(x, y, color, indent) -> None:
     pygame.draw.rect(global_.screen, pygame.Color(color), (x + indent,
                      y + indent, global_.SIZE - indent * 2, global_.SIZE - indent * 2))
@@ -46,13 +47,16 @@ def check_and_end_of_game(snake: snake_.Snake) -> None:
                         level, name = menu_.menu(snake.name)
                         gameloop(level, name)
 
+
 cl = 'temp'
-key = 'temp'         
+key = 'temp'
+
+
 def check_events(snake: snake_.Snake) -> None:
     global cl
     global key
     for event in pygame.event.get():
-        #print(event)
+        # print(event)
         if event.type == pygame.QUIT:
             exit()
         if event.type == pygame.KEYDOWN:
@@ -80,17 +84,19 @@ def check_events(snake: snake_.Snake) -> None:
         elif (cl == 'd' or cl == 'в' or key == pygame.K_d or key == pygame.K_RIGHT) and snake.d_col == 0:
             snake.buf_d_col, snake.buf_d_row = 1, 0
 
+
 def scan_key_pressed(snake: snake_.Snake) -> None:
     check_events(snake)
-    #key = pygame.key.get_pressed()
-    #if (key[pygame.K_UP] or key[pygame.K_w]) and snake.d_row == 0:
+    # key = pygame.key.get_pressed()
+    # if (key[pygame.K_UP] or key[pygame.K_w]) and snake.d_row == 0:
     #    snake.buf_d_col, snake.buf_d_row = 0, -1
-    #elif (key[pygame.K_LEFT] or key[pygame.K_a]) and snake.d_col == 0:
+    # elif (key[pygame.K_LEFT] or key[pygame.K_a]) and snake.d_col == 0:
     #    snake.buf_d_col, snake.buf_d_row = -1, 0
-    #elif (key[pygame.K_DOWN] or key[pygame.K_s]) and snake.d_row == 0:
+    # elif (key[pygame.K_DOWN] or key[pygame.K_s]) and snake.d_row == 0:
     #    snake.buf_d_col, snake.buf_d_row = 0, 1
-    #elif (key[pygame.K_RIGHT] or key[pygame.K_d]) and snake.d_col == 0:
+    # elif (key[pygame.K_RIGHT] or key[pygame.K_d]) and snake.d_col == 0:
     #    snake.buf_d_col, snake.buf_d_row = 1, 0
+
 
 def gameloop(level, name) -> None:
     global cl, key
@@ -104,7 +110,7 @@ def gameloop(level, name) -> None:
 
     global_.img = pygame.image.load(
         global_.full_path/global_.images[randrange(0, 2)]).convert()
-        
+
     while running:
         global_.screen.blit(global_.img, (0, 0))
         # global_.screen.fill(pygame.Color('black'))
@@ -129,7 +135,7 @@ def gameloop(level, name) -> None:
             snake.score += 1
             snake.speed += snake.d_speed
             snake.speed = max(snake.speed, snake_.Snake.MIN_SPEED)
-            snake.d_speed -= 15
+            snake.d_speed += snake.acceleration
             snake.speed = min(snake.speed, snake_.Snake.MAX_SPEED)
 
         # game over
@@ -139,15 +145,15 @@ def gameloop(level, name) -> None:
         pygame.display.flip()
         global_.clock.tick(global_.FPS)
 
-        #for event in pygame.event.get():
-            #if event.type == pygame.QUIT:
-            #exit()
+        # for event in pygame.event.get():
+        # if event.type == pygame.QUIT:
+        # exit()
 
         # control
         scan_key_pressed(snake)
 
 
-#name = input("Enter your nick: ")
+# name = input("Enter your nick: ")
 global_.start()
 level, name = menu_.menu()
 gameloop(level, name)
