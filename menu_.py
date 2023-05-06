@@ -2,7 +2,8 @@ import global_
 import pygame
 import fonts_
 
-def menu(start_name = ''):
+
+def menu(start_name=''):
     size_of_font = 100
     base_font = pygame.font.Font(None, size_of_font)
     user_text = start_name
@@ -13,7 +14,7 @@ def menu(start_name = ''):
     color = color_active
 
     active = False
-    
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -31,7 +32,7 @@ def menu(start_name = ''):
                         active = False
                     else:
                         user_text += event.unicode
-                    
+
                 else:
                     level = 0
                     if event.key == pygame.K_1 or event.unicode == '1':
@@ -48,20 +49,18 @@ def menu(start_name = ''):
                     if level:
                         return [level, user_text]
 
-                
         global_.screen.fill((255, 255, 255))
 
         if active:
             color = color_active
         else:
             color = color_passive
-        
+
         fonts_.draw_help_menu()
         pygame.draw.rect(global_.screen, color, input_rect)
         text_surface = base_font.render(user_text, True, (255, 255, 255))
         global_.screen.blit(text_surface, (input_rect.x+5, input_rect.y+5))
         input_rect.w = max(size_of_font, text_surface.get_width()+10)
-
 
         pygame.display.flip()
         global_.clock.tick(60)

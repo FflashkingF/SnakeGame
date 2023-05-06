@@ -8,8 +8,10 @@ class Snake:
     MIN_SPEED = 3000
     MAX_SPEED = UPDATE
     START_SPEED = 6000
-    COLORS = ['green', 'red', 'blue', 'gold', 'cyan', 'yellow', 'brown', 'pink', 'white', 'orange', 'purple']
+    COLORS = ['green', 'red', 'blue', 'gold', 'cyan',
+              'yellow', 'brown', 'pink', 'white', 'orange', 'purple']
     VARIANT_OF_START = [6000, 8000, 10000, 12000, 15000]
+
     def __init__(self) -> None:
         self.length = 1
         self.head = block_.Block(randrange(0, global_.WINDOW_SIZE, global_.SIZE),
@@ -35,4 +37,3 @@ class Snake:
             self.head.y += self.d_row * global_.SIZE
             self.body.append(block_.Block(self.head.x, self.head.y))
             self.body = self.body[-self.length:]
-

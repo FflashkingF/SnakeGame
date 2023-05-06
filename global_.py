@@ -16,8 +16,9 @@ images = ['16.jpg', '17.jpg']
 img = "temp"
 hall = "temp"
 
+
 def start():
-  global screen
-  global hall
-  screen = pygame.display.set_mode([WINDOW_SIZE, WINDOW_SIZE])
-  hall = pygame.image.load(full_path/'21.png').convert()
+    global screen
+    global hall
+    screen = pygame.display.set_mode([WINDOW_SIZE, WINDOW_SIZE])
+    hall = pygame.image.load(full_path/'image'/'21.png').convert()

@@ -3,6 +3,7 @@ import fonts_
 import global_
 from functools import cmp_to_key
 
+
 def input() -> dict:
     with open(global_.full_path/'records.json', 'r') as file:
         data = json.load(file)
@@ -21,21 +22,21 @@ def new_record(name: str, score: int) -> None:
     data[name] = max(data[name], score)
     output(data)
 
+
 def draw_records() -> None:
-  data = input()
-  mas = []
-  for name, score in data.items():
-    mas.append((name, score))
-  
-  def compare_func(a, b) -> int:
-    if a == b:
-      return 0
-    res =  (a[1] > b[1] or (a[1] == b[1] and a[0] < b[0]))
-    if res:
-      return -1
-    else:
-      return 1
+    data = input()
+    mas = []
+    for name, score in data.items():
+        mas.append((name, score))
 
-  mas = sorted(mas, key=cmp_to_key(compare_func))
-  fonts_.draw_records(mas)
+    def compare_func(a, b) -> int:
+        if a == b:
+            return 0
+        res = (a[1] > b[1] or (a[1] == b[1] and a[0] < b[0]))
+        if res:
+            return -1
+        else:
+            return 1
 
+    mas = sorted(mas, key=cmp_to_key(compare_func))
+    fonts_.draw_records(mas)

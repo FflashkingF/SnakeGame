@@ -109,7 +109,7 @@ def gameloop(level, name) -> None:
     apple = get_random_empty_block(snake)
 
     global_.img = pygame.image.load(
-        global_.full_path/global_.images[randrange(0, 2)]).convert()
+        global_.full_path/'image'/global_.images[randrange(0, 2)]).convert()
 
     while running:
         global_.screen.blit(global_.img, (0, 0))

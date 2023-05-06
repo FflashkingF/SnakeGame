@@ -74,7 +74,7 @@ def draw_help_menu():
     global_.screen.blit(help_render3, help_rect3)
 
     help_render4 = help_font.render(
-        'After Return click 1...5 to choice level.', True, pygame.Color('chartreuse4'))
+        'After Return click 1...5 to choose level.', True, pygame.Color('chartreuse4'))
     help_rect4 = help_render4.get_rect(
         center=(global_.WINDOW_SIZE // 2, 8 * global_.WINDOW_SIZE // 10))
     global_.screen.blit(help_render4, help_rect4)
