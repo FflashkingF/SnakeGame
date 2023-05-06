@@ -1,7 +1,7 @@
 import global_
 import pygame
 import fonts_
-
+import constants_
 
 def menu(start_name=''):
     size_of_font = 100
@@ -49,7 +49,7 @@ def menu(start_name=''):
                     if level:
                         return [level, user_text]
 
-        global_.screen.fill((255, 255, 255))
+        global_.screen.fill('white')
 
         if active:
             color = color_active
@@ -58,7 +58,7 @@ def menu(start_name=''):
 
         fonts_.draw_help_menu()
         pygame.draw.rect(global_.screen, color, input_rect)
-        text_surface = base_font.render(user_text, True, (255, 255, 255))
+        text_surface = base_font.render(user_text, True, 'white')
         global_.screen.blit(text_surface, (input_rect.x+5, input_rect.y+5))
         input_rect.w = max(size_of_font, text_surface.get_width()+10)
 

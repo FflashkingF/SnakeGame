@@ -1,7 +1,6 @@
 import pygame
 import global_
 
-
 def draw_score(score: int) -> None:
     font_score = pygame.font.SysFont('Arial', 26, bold=True)
     render_score = font_score.render(
@@ -28,7 +27,6 @@ def draw_end() -> None:
 
 def draw_records(mas) -> None:
     global_.screen.blit(global_.hall, (0, 0))
-    # global_.screen.fill(pygame.Color('black'))
 
     GOLD = (255, 215, 0)
     font_title = pygame.font.SysFont('Arial', 100, bold=True)
@@ -36,16 +34,16 @@ def draw_records(mas) -> None:
     title_rect = title_render.get_rect(center=(global_.WINDOW_SIZE // 2, 100))
     global_.screen.blit(title_render, title_rect)
 
-    now = 250
+    now_y_to_records = 250
     font_records = pygame.font.SysFont('Arial', 75, bold=False)
     for name, score in mas:
         score_render = font_records.render(
             f'{name}   {score}', True, GOLD)
         score_rect = score_render.get_rect(
-            center=(global_.WINDOW_SIZE // 2, now))
-        now += 100
+            center=(global_.WINDOW_SIZE // 2, now_y_to_records))
+        now_y_to_records += 100
         global_.screen.blit(score_render, score_rect)
-        if now + global_.SIZE * 2 >= global_.WINDOW_SIZE:
+        if now_y_to_records + global_.SIZE * 2 >= global_.WINDOW_SIZE:
             break
 
     support_font = pygame.font.SysFont('Arial', 20, bold=False)
