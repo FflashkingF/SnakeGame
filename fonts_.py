@@ -34,7 +34,7 @@ def draw_records(mas) -> None:
     title_rect = title_render.get_rect(center=(global_.WINDOW_SIZE // 2, 100))
     global_.screen.blit(title_render, title_rect)
 
-    now_y_to_records = 250
+    now_y_to_records = global_.INITIAL_POSITION_FOR_RECORDS
     font_records = pygame.font.SysFont('Arial', 75, bold=False)
     for name, score in mas:
         score_render = font_records.render(
