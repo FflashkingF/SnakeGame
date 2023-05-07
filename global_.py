@@ -6,6 +6,7 @@ full_path = pathlib.Path(__file__).parent.resolve()
 WINDOW_SIZE = 800
 SIZE = 50
 FPS = 40
+INITIAL_POSITION_FOR_RECORDS = 250
 
 pygame.init()
 screen = "temp"

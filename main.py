@@ -37,50 +37,50 @@ def check_and_end_of_game(snake: snake_.Snake) -> None:
                 if event.type == pygame.QUIT:
                     exit()
                 if event.type == pygame.KEYDOWN:
-                    cl = event.unicode.lower()
-                    if event.key == pygame.K_r or cl == 'r' or cl == 'к':
+                    key_unicode = event.unicode.lower()
+                    if event.key == pygame.K_r or key_unicode == 'r' or key_unicode == 'к':
                         gameloop(snake.level, snake.name)
-                    elif event.key == pygame.K_t or cl == 't' or cl == 'е':
+                    elif event.key == pygame.K_t or key_unicode == 't' or key_unicode == 'е':
                         records_.draw_records()
                         pygame.display.flip()
-                    elif event.key == pygame.K_m or cl == 'm' or cl == 'ь':
+                    elif event.key == pygame.K_m or key_unicode == 'm' or key_unicode == 'ь':
                         level, name = menu_.menu(snake.name)
                         gameloop(level, name)
 
 
-cl = 'temp'
+key_unicode = 'temp'
 key = 'temp'
 
 
 def check_events(snake: snake_.Snake) -> None:
-    global cl
+    global key_unicode
     global key
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
         if event.type == pygame.KEYDOWN:
-            cl = event.unicode.lower()
+            key_unicode = event.unicode.lower()
             key = event.key
-            if (cl == 'w' or cl == 'ц' or key == pygame.K_w or key == pygame.K_UP) and snake.d_row == 0:
+            if (key_unicode == 'w' or key_unicode == 'ц' or key == pygame.K_w or key == pygame.K_UP) and snake.d_row == 0:
                 snake.buf_d_col, snake.buf_d_row = 0, -1
-            elif (cl == 'a' or cl == 'ф' or key == pygame.K_a or key == pygame.K_LEFT) and snake.d_col == 0:
+            elif (key_unicode == 'a' or key_unicode == 'ф' or key == pygame.K_a or key == pygame.K_LEFT) and snake.d_col == 0:
                 snake.buf_d_col, snake.buf_d_row = -1, 0
-            elif (cl == 's' or cl == 'ы' or key == pygame.K_s or key == pygame.K_DOWN) and snake.d_row == 0:
+            elif (key_unicode == 's' or key_unicode == 'ы' or key == pygame.K_s or key == pygame.K_DOWN) and snake.d_row == 0:
                 snake.buf_d_col, snake.buf_d_row = 0, 1
-            elif (cl == 'd' or cl == 'в' or key == pygame.K_d or key == pygame.K_RIGHT) and snake.d_col == 0:
+            elif (key_unicode == 'd' or key_unicode == 'в' or key == pygame.K_d or key == pygame.K_RIGHT) and snake.d_col == 0:
                 snake.buf_d_col, snake.buf_d_row = 1, 0
-            elif (cl == 'д' or cl == 'l' or key == pygame.K_l):
+            elif (key_unicode == 'д' or key_unicode == 'l' or key == pygame.K_l):
                 snake.pos_color += 1
                 snake.pos_color %= len(snake_.Snake.COLORS)
                 snake.color = snake_.Snake.COLORS[snake.pos_color]
-    if cl != 'temp':
-        if (cl == 'w' or cl == 'ц' or key == pygame.K_w or key == pygame.K_UP) and snake.d_row == 0:
+    if key_unicode != 'temp':
+        if (key_unicode == 'w' or key_unicode == 'ц' or key == pygame.K_w or key == pygame.K_UP) and snake.d_row == 0:
             snake.buf_d_col, snake.buf_d_row = 0, -1
-        elif (cl == 'a' or cl == 'ф' or key == pygame.K_a or key == pygame.K_LEFT) and snake.d_col == 0:
+        elif (key_unicode == 'a' or key_unicode == 'ф' or key == pygame.K_a or key == pygame.K_LEFT) and snake.d_col == 0:
             snake.buf_d_col, snake.buf_d_row = -1, 0
-        elif (cl == 's' or cl == 'ы' or key == pygame.K_s or key == pygame.K_DOWN) and snake.d_row == 0:
+        elif (key_unicode == 's' or key_unicode == 'ы' or key == pygame.K_s or key == pygame.K_DOWN) and snake.d_row == 0:
             snake.buf_d_col, snake.buf_d_row = 0, 1
-        elif (cl == 'd' or cl == 'в' or key == pygame.K_d or key == pygame.K_RIGHT) and snake.d_col == 0:
+        elif (key_unicode == 'd' or key_unicode == 'в' or key == pygame.K_d or key == pygame.K_RIGHT) and snake.d_col == 0:
             snake.buf_d_col, snake.buf_d_row = 1, 0
 
 
@@ -88,8 +88,8 @@ def scan_key_pressed(snake: snake_.Snake) -> None:
     check_events(snake)
 
 def gameloop(level, name) -> None:
-    global cl, key
-    cl = key = 'temp'
+    global key_unicode, key
+    key_unicode = key = 'temp'
     running = True
     snake = snake_.Snake()
     snake.name = name
@@ -131,7 +131,7 @@ def gameloop(level, name) -> None:
 
         # update global_.screen
         pygame.display.flip()
-        global_.clock.tick(global_.FPS)
+        global_.key_unicodeock.tick(global_.FPS)
 
         # control
         scan_key_pressed(snake)
