@@ -131,7 +131,7 @@ def gameloop(level, name) -> None:
 
         # update global_.screen
         pygame.display.flip()
-        global_.key_unicodeock.tick(global_.FPS)
+        global_.clock.tick(global_.FPS)
 
         # control
         scan_key_pressed(snake)
